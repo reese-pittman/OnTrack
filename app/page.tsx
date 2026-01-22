@@ -1,0 +1,8 @@
+export default function Home() {
+  return (
+    <main className="p-8">
+      <h1 className="text-2xl font-bold">OnTrack</h1>
+      <p>Workflow management app</p>
+    </main>
+  );
+}
