@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Organization {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships Membership[]
+  requests    Request[]
+  invites     InviteToken[]
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  memberships      Membership[]
+  requests         Request[]    @relation("RequestSubmitter")
+  reviewedRequests Request[]    @relation("RequestReviewer")
+  createdInvites   InviteToken[]
+}
+
+model Membership {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  organizationId Int
+  role           String
+  createdAt      DateTime @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+}
+
+model Request {
+  id             Int      @id @default(autoincrement())
+  organizationId Int
+  userId         Int
+  title          String
+  description    String?
+  status         String   @default("pending")
+  adminResponse  String?
+  reviewedBy     Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation("RequestSubmitter", fields: [userId], references: [id], onDelete: Cascade)
+  reviewer     User?        @relation("RequestReviewer", fields: [reviewedBy], references: [id], onDelete: SetNull)
+}
+
+model InviteToken {
+  id             Int       @id @default(autoincrement())
+  organizationId Int
+  token          String    @unique
+  role           String
+  createdBy      Int
+  expiresAt      DateTime?
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  creator      User         @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+}
