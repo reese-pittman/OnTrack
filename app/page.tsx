@@ -1,8 +1,15 @@
-export default function Home() {
+import React from 'react';
+import NavBar from '@/components/layout/NavBar';
+
+
+export default function LandingPage() {
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-bold">OnTrack</h1>
-      <p>Workflow management app</p>
-    </main>
+    <div>
+      <NavBar />
+      <main className="p-8">
+      
+      </main>
+    </div>
+    
   );
 }
