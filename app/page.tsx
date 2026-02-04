@@ -1,8 +1,20 @@
-export default function Home() {
+import React from 'react';
+import NavBar from '@/components/layout/LandingNavBar';
+import Footer from '@/components/layout/Footer';
+import HeroSection from '@/components/landing/HeroSection';
+import Stats_Features from '@/components/landing/Stats_Features';
+
+
+export default function LandingPage() {
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-bold">OnTrack</h1>
-      <p>Workflow management app</p>
-    </main>
+    <div>
+      <NavBar />
+      <main className="">
+        <HeroSection />
+        <Stats_Features />
+      </main>
+      <Footer />
+    </div>
+    
   );
 }
