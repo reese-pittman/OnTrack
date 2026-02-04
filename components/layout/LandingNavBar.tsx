@@ -26,16 +26,16 @@ export default function NavBar() {
 
 
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 justify-between space-x-4 gap-4">
-                        <a href="#" className="relative bg-[#e6fef9] rounded-md border-transparent hover:bg-[#ccfef4] shadow-xs font-medium leading-5 rounded-base text-sm px-5 py-2.5">
+                        <a href="#" className="text-white relative bg-[#0da2ff] rounded-md border-transparent hover:bg-[#009dff] shadow-xs font-medium leading-5 rounded-base text-sm px-5 py-2.5">
                             <span className="absolute -inset-1.5"></span>
-                            <span className="sr-only">View notifications</span>
+                            <span className="sr-only">Log In</span>
 
                             Login
                         </a>
 
-                        <a href="#" className="relative bg-[#4dfbd7] rounded-md border-transparent hover:bg-[#1afacc] shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5">
+                        <a href="#" className="text-white relative bg-[#0234d2] rounded-md border-transparent hover:bg-[#2626ff] shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5">
                             <span className="absolute -inset-1.5"></span>
-                            <span className="sr-only">View notifications</span>
+                            <span className="sr-only">Register</span>
 
                             Get Started
                         </a>
