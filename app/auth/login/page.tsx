@@ -5,7 +5,7 @@ import LoginHero from '@/components/auth/LoginHero';
 export default function LandingPage() {
   return (
     <div>
-      <NavBar page="Login" />
+      <NavBar page="1" />
       <main className="">
         <LoginHero />
       </main>
