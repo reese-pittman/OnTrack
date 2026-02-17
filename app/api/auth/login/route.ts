@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcryct from "bcrypt";
-import { error } from "console";
+import { createSession } from '@/lib/sessions';
+
 
 export async function POST(resquest: Request) {
+
     try {
         const { email, password, name} = await resquest.json();
 
@@ -16,13 +18,6 @@ export async function POST(resquest: Request) {
 
         const user = await prisma.user.findUnique({
             where: { email },
-            include: {
-                memberships: {
-                    include: {
-                        organization: true,
-                    }
-                }
-            }
         });
 
         if (!user) {
@@ -41,8 +36,7 @@ export async function POST(resquest: Request) {
             );
         }
 
-        const membership = user.memberships[0];
-        const role = membership?.role || "user";
+        await createSession(user.id);
 
         return NextResponse.json(
             {
@@ -51,8 +45,6 @@ export async function POST(resquest: Request) {
                     id: user.id,
                     email: user.email,
                     name: user.name,
-                    role: role,
-                    organizationId: membership?.organizationId,
                     },
             },
             { status: 200 }

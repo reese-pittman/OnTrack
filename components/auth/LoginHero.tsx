@@ -1,11 +1,37 @@
-export default function LoginHero() {
+interface LoginFormProps {
+    email: string;
+    onEmailChange: (email: string) => void;
+    password: string;
+    onPasswordChange: (password: string) => void;
+    error: string;
+    loading: boolean;
+    onSubmit: (e: React.FormEvent) => void;
+}
+
+export default function LoginHero({
+
+    email,
+    onEmailChange,
+    password,
+    onPasswordChange,
+    error,
+    loading,
+    onSubmit,
+}: LoginFormProps) {
     return (
+
         <div className="bg-gray-100 min-h-screen flex items-center justify-center py-12 px-4">
             <div className="bg-white border border-gray-200 rounded-xl shadow-xl max-w-md w-full overflow-hidden">
 
                 <div className="w-full h-10 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
 
-                <div className="p-8 flex flex-col gap-8">
+                <form className="p-8 flex flex-col gap-8" onSubmit={onSubmit}>
+
+                    {error && (
+                        <div className="rounded-md bg-red-50 p-4">
+                            <p className="text-sm text-red-800">{error}</p>
+                        </div>
+                    )}
 
 
                     <header className="text-center">
@@ -23,6 +49,8 @@ export default function LoginHero() {
                             <input
                                 type="email"
                                 id="email"
+                                value={email}
+                                onChange={(e) => onEmailChange(e.target.value)}
                                 className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                                 placeholder="e.g. john.doe@company.com"
                             />
@@ -35,6 +63,8 @@ export default function LoginHero() {
                             <input
                                 type="password"
                                 id="password"
+                                value={password}
+                                onChange={(e) => onPasswordChange(e.target.value)}
                                 className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                                 placeholder="••••••••"
                             />
@@ -47,7 +77,10 @@ export default function LoginHero() {
                     </section>
 
                     <div className="flex flex-col gap-4">
-                        <button className="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button
+                            type='submit'
+                            disabled={loading}
+                            className="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             Log In
                         </button>
 
@@ -77,7 +110,7 @@ export default function LoginHero() {
                             </a>
                         </p>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )

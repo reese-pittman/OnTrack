@@ -1,13 +1,48 @@
-export default function RegisterHero() {
+interface RegisterHeroProps {
+    email: string;
+    password: string;
+    name: string;
+    onEmailChange: (email: string) => void;
+    onPasswordChange: (password: string) => void;
+    onNameChange: (name: string) => void;
+    error: string;
+    loading: boolean;
+    onSubmit: (e: React.FormEvent) => void;
+
+}
+
+
+
+
+
+export default function RegisterHero(
+    {
+        email,
+        password,
+        name,
+        onEmailChange,
+        onPasswordChange,
+        onNameChange,
+        error,
+        loading,
+        onSubmit,
+
+    }: RegisterHeroProps) {
     return (
         <div className="bg-gray-100 min-h-screen flex items-center justify-center py-2 px-4">
-            <div className="bg-white border border-gray-200 rounded-xl shadow-xl max-w-3xl w-full overflow-hidden flex">
-                
+            <form className="bg-white border border-gray-200 rounded-xl shadow-xl max-w-3xl w-full overflow-hidden flex" onSubmit={onSubmit}>
+
                 <div className="w-10 bg-gradient-to-b from-blue-500 to-cyan-500 flex-shrink-0"></div>
-                
+
+                {error && (
+                    <div className="rounded-md bg-red-50 p-4">
+                        <p className="text-sm text-red-800">{error}</p>
+                    </div>
+                )}
+
                 {/* Content */}
                 <div className="p-10 flex gap-8 flex-1">
-                    
+
                     {/* Header */}
                     <header className="flex flex-col items-center justify-center">
                         <h2 className="text-5xl font-bold text-gray-900">Create your account</h2>
@@ -19,11 +54,13 @@ export default function RegisterHero() {
                             <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
                                 Full Name
                             </label>
-                            <input 
-                                type="text" 
-                                id="username" 
-                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none" 
-                                placeholder="e.g. John Doe" 
+                            <input
+                                type="text"
+                                id="username"
+                                value={name}
+                                onChange={(e) => onNameChange(e.target.value)}
+                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                                placeholder="e.g. John Doe"
                             />
                         </div>
 
@@ -31,11 +68,13 @@ export default function RegisterHero() {
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                                 Email Address
                             </label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none" 
-                                placeholder="e.g. john.doe@company.com" 
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => onEmailChange(e.target.value)}
+                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                                placeholder="e.g. john.doe@company.com"
                             />
                         </div>
 
@@ -43,11 +82,13 @@ export default function RegisterHero() {
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                                 Password
                             </label>
-                            <input 
-                                type="password" 
-                                id="password" 
-                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none" 
-                                placeholder="••••••••" 
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => onPasswordChange(e.target.value)}
+                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                                placeholder="••••••••"
                             />
                             <p className="mt-2 text-xs text-gray-500">
                                 Must be at least 8 characters and include a number and special character.
@@ -55,11 +96,11 @@ export default function RegisterHero() {
                         </div>
 
                         <div className="flex items-start gap-2">
-                            <input 
-                                type="checkbox" 
-                                name="terms" 
-                                id="terms" 
-                                className="h-4 w-4 mt-1 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" 
+                            <input
+                                type="checkbox"
+                                name="terms"
+                                id="terms"
+                                className="h-4 w-4 mt-1 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                             />
                             <label htmlFor="terms" className="text-sm text-gray-700">
                                 I agree to the{' '}
@@ -73,7 +114,10 @@ export default function RegisterHero() {
                             </label>
                         </div>
 
-                        <button className="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button 
+                        disabled={loading}
+                        type='submit'
+                        className="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             Create Account
                         </button>
 
@@ -87,7 +131,7 @@ export default function RegisterHero() {
                         </div>
                     </section>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }
