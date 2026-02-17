@@ -26,6 +26,7 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  sessions    Session[]
   memberships      Membership[]
   requests         Request[]    @relation("RequestSubmitter")
   reviewedRequests Request[]    @relation("RequestReviewer")
@@ -73,4 +74,15 @@ model InviteToken {
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   creator      User         @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id String @id @default(cuid())
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+
 }

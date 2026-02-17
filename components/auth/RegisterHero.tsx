@@ -1,37 +1,137 @@
+interface RegisterHeroProps {
+    email: string;
+    password: string;
+    name: string;
+    onEmailChange: (email: string) => void;
+    onPasswordChange: (password: string) => void;
+    onNameChange: (name: string) => void;
+    error: string;
+    loading: boolean;
+    onSubmit: (e: React.FormEvent) => void;
 
-export default function RegisterHero() {
+}
+
+
+
+
+
+export default function RegisterHero(
+    {
+        email,
+        password,
+        name,
+        onEmailChange,
+        onPasswordChange,
+        onNameChange,
+        error,
+        loading,
+        onSubmit,
+
+    }: RegisterHeroProps) {
     return (
-        <div className="bg-blue border border-gray-200 rounded-xl shadow-xl p-8 flex items-center justify-center max-w-md mx-auto mt-20 mb-20">
-            <header>
-                <h2 className="text-3xl font-bold">Create you account</h2>
-                <p className="mt-4 text-gray-600">Start managing your workflows efficiently with OnTrack.</p>
-            </header>
-            <section className="flex flex-col gap-6">
-                <div>
-                    <div>
-                        <label htmlFor="username" className="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" id="username" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" placeholder="e.g. John Doe" />
+        <div className="bg-gray-100 min-h-screen flex items-center justify-center py-2 px-4">
+            <form className="bg-white border border-gray-200 rounded-xl shadow-xl max-w-3xl w-full overflow-hidden flex" onSubmit={onSubmit}>
+
+                <div className="w-10 bg-gradient-to-b from-blue-500 to-cyan-500 flex-shrink-0"></div>
+
+                {error && (
+                    <div className="rounded-md bg-red-50 p-4">
+                        <p className="text-sm text-red-800">{error}</p>
                     </div>
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" id="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" placeholder="e.g. john.doe@company.com" />
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" placeholder="......." />
-                        <p className="text-sm text-gray-500">Must be at least 8 characters and include a number and special character.</p>
-                    </div>
+                )}
+
+                {/* Content */}
+                <div className="p-10 flex gap-8 flex-1">
+
+                    {/* Header */}
+                    <header className="flex flex-col items-center justify-center">
+                        <h2 className="text-5xl font-bold text-gray-900">Create your account</h2>
+                        <p className="mt-3 text-blue-600 text-lg">Start managing your workflows efficiently with OnTrack.</p>
+                    </header>
+
+                    <section className="flex flex-col gap-3">
+                        <div>
+                            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                                Full Name
+                            </label>
+                            <input
+                                type="text"
+                                id="username"
+                                value={name}
+                                onChange={(e) => onNameChange(e.target.value)}
+                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                                placeholder="e.g. John Doe"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => onEmailChange(e.target.value)}
+                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                                placeholder="e.g. john.doe@company.com"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => onPasswordChange(e.target.value)}
+                                className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                                placeholder="••••••••"
+                            />
+                            <p className="mt-2 text-xs text-gray-500">
+                                Must be at least 8 characters and include a number and special character.
+                            </p>
+                        </div>
+
+                        <div className="flex items-start gap-2">
+                            <input
+                                type="checkbox"
+                                name="terms"
+                                id="terms"
+                                className="h-4 w-4 mt-1 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label htmlFor="terms" className="text-sm text-gray-700">
+                                I agree to the{' '}
+                                <a href="#" className="text-indigo-600 hover:text-indigo-500 font-medium">
+                                    Terms of Service
+                                </a>
+                                {' '}and{' '}
+                                <a href="#" className="text-indigo-600 hover:text-indigo-500 font-medium">
+                                    Privacy Policy
+                                </a>.
+                            </label>
+                        </div>
+
+                        <button 
+                        disabled={loading}
+                        type='submit'
+                        className="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Create Account
+                        </button>
+
+                        <div className="text-center pt-4 border-t border-gray-200">
+                            <p className="text-sm text-gray-600">
+                                Already have an account?{' '}
+                                <a href="/auth/login" className="text-indigo-600 hover:text-indigo-500 font-medium">
+                                    Log In
+                                </a>
+                            </p>
+                        </div>
+                    </section>
                 </div>
-                <div className="flex items-center">
-                    <input type="checkbox" name="terms" id="terms" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-                    <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">I agree to the <a href="#" className="text-indigo-600 hover:text-indigo-500">Terms of Service</a> and <a href="#" className="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>.</label>
-                </div>
-                <div>
-                    <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        Create Account
-                    </button>
-                </div>
-            </section>
+            </form>
         </div>
     )
 }
